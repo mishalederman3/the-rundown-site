@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-08-25T00:35:19Z",
+  "events": [
+    {
+      "name": "The Belfort Events",
+      "date": "2026-09-12",
+      "time": "10:00 PM – 2:00 AM",
+      "venue": "The Belfort",
+      "price": "$10.00 – $12.50",
+      "description": "The Belfort hosts regular Saturday nights and themed events throughout the year. Valid student ID required; tiered ticket pricing available.",
+      "image_url": "https://thebelfort.net/images/hero_still.jpg",
+      "link": "https://thebelfort.net/events"
+    },
+    {
+      "name": "MURDA BEATZ @ LOST LOVE",
+      "date": "2026-09-12",
+      "time": "10:00 PM – 2:00 AM EDT",
+      "venue": "Lost Love Social House",
+      "price": "$10.00 – $30.00",
+      "description": "Murda Beatz brings his underground house sound to Lost Love for Frosh Week Saturday. Fresh off his #1 hit 'Baby,' expect nonstop beats and chart-topping tracks. 19+.",
+      "image_url": "https://doavub8d2uzrx.cloudfront.net/media/images/events/lost-love/img-banner/5fa0c08c-1f6.png",
+      "link": "https://www.showpass.com/murda-beatz-london-ontario/"
+    },
+    {
+      "name": "EX x ZY Presents: WESTERN OPEN ROOFTOP DARTY",
+      "date": "2026-09-12",
+      "time": "1:00 PM – 5:00 PM EDT",
+      "venue": "Lost Love Social House",
+      "price": "$10.00 – $20.00",
+      "description": "Kick off frosh week at the rooftop darty! Dress all white and join EX x ZY for the season's first rooftop party. 19+ only.",
+      "image_url": "https://doavub8d2uzrx.cloudfront.net/media/images/events/lost-love/img-banner/1733f7b5-08d.png",
+      "link": "https://www.showpass.com/ex-x-zy-presents-western-open-rooftop-darty/"
+    },
+    {
+      "name": "BCKYRD LONDON",
+      "date": "2026-09-18",
+      "time": "3:00 PM EDT",
+      "venue": "London International Airport",
+      "price": "$157.06 - $207.83",
+      "description": "All-ages dance and electronic music festival at London International Airport. VIP packages include dedicated entry, VIP bars, and exclusive viewing areas.",
+      "image_url": "https://i.ticketweb.com/i/00/12/95/28/04_Edp.jpg?v=36",
+      "link": "https://www.ticketweb.ca/event/bckyrd-london-london-international-airport-tickets/14236404"
+    }
+  ]
+}

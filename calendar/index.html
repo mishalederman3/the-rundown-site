@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rundown — Live Calendar</title>
+<!--
+  The Rundown — live branded calendar widget.
+
+  This page is meant to be loaded inside an <iframe> on the published web
+  version of a newsletter issue (see templates/newsletter.html /
+  generate_newsletter.py for how the iframe src is built). It is NOT
+  pasted into beehiiv directly, so — unlike templates/newsletter.html —
+  normal <style> and <script> tags work completely normally here. See the
+  "beehiiv-style-stripping" project memory for why that distinction
+  matters: beehiiv strips <style>/<script> from HTML pasted into its
+  editor, but a page loaded via <iframe> is just an ordinary webpage.
+
+  Data flow:
+    scripts/generate_public_feed.py writes site/events.json, which this
+    page fetches client-side on every page view, so it's always as
+    current as the last time that script ran (see the Makefile "feed"
+    target for how often that is).
+
+  URL params (both optional; UTC, inclusive on both ends):
+    ?start=YYYY-MM-DD
+    ?end=YYYY-MM-DD
+  With no params, every event in events.json is shown.
+-->
+<style>
+  :root {
+    --purple: #4f2683;
+    --purple-light: #d7c8ec;
+    --ink: #18111f;
+    --body-text: #3f354c;
+    --meta-text: #5b5166;
+    --card-bg: #fbf9ff;
+    --card-border: #e7dff0;
+    --page-bg: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--page-bg);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: var(--ink);
+  }
+
+  body {
+    padding: 16px;
+  }
+
+  .day-heading {
+    margin: 20px 0 8px;
+    padding: 0 0 8px 10px;
+    border-left: 3px solid var(--purple);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--purple);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .day-heading:first-of-type {
+    margin-top: 0;
+  }
+
+  .event-card {
+    display: flex;
+    gap: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 12px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .event-card img {
+    display: block;
+    width: 96px;
+    height: 96px;
+    min-width: 96px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: var(--purple-light);
+  }
+
+  .event-card .card-body {
+    min-width: 0; /* allow text to wrap instead of overflowing the flex item */
+  }
+
+  .event-card h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+  .event-card .meta {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 18px;
+    color: var(--meta-text);
+  }
+
+  .event-card .desc {
+    margin: 4px 0 0;
+    font-size: 12.5px;
+    line-height: 18px;
+    color: var(--body-text);
+  }
+
+  /* Real breakpoint — this page isn't pasted into beehiiv, so unlike the
+     newsletter template, a CSS media query here actually reaches the
+     browser. Stack the image above the text on narrow iframe widths. */
+  @media (max-width: 420px) {
+    .event-card {
+      flex-direction: column;
+    }
+    .event-card img {
+      width: 100%;
+      height: 160px;
+    }
+  }
+
+  .empty-state, .error-state, .loading-state {
+    padding: 32px 12px;
+    text-align: center;
+    color: var(--meta-text);
+    font-size: 14px;
+  }
+
+  .feed-footer {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--meta-text);
+  }
+</style>
+</head>
+<body>
+  <div id="content" class="loading-state">Loading events…</div>
+  <div id="footer" class="feed-footer" style="display:none;"></div>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var start  = params.get('start'); // YYYY-MM-DD, inclusive
+  var end    = params.get('end');   // YYYY-MM-DD, inclusive
+
+  var contentEl = document.getElementById('content');
+  var footerEl  = document.getElementById('footer');
+
+  function esc(str) {
+    var div = document.createElement('div');
+    div.textContent = str == null ? '' : String(str);
+    return div.innerHTML;
+  }
+
+  function formatDayHeading(dateStr) {
+    // dateStr is "YYYY-MM-DD"; parse as UTC to avoid local-timezone day shift
+    var parts = dateStr.split('-').map(Number);
+    var d = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
+    return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' }).toUpperCase();
+  }
+
+  function renderEvents(events) {
+    if (events.length === 0) {
+      contentEl.className = 'empty-state';
+      contentEl.textContent = 'No events in this range right now — check back soon!';
+      return;
+    }
+
+    var html = '';
+    var prevDay = null;
+
+    events.forEach(function (e) {
+      if (e.date && e.date !== prevDay) {
+        html += '<div class="day-heading">' + esc(formatDayHeading(e.date)) + '</div>';
+        prevDay = e.date;
+      }
+
+      var metaParts = [e.venue, e.time, e.price].filter(Boolean);
+      var metaLine = metaParts.join(' | ');
+
+      var imgHtml = e.image_url
+        ? '<img src="' + esc(e.image_url) + '" alt="' + esc(e.name) + '" loading="lazy">'
+        : '';
+
+      var cardOpen = e.link
+        ? '<a class="event-card" href="' + esc(e.link) + '" target="_blank" rel="noopener">'
+        : '<div class="event-card">';
+      var cardClose = e.link ? '</a>' : '</div>';
+
+      html += cardOpen
+        + imgHtml
+        + '<div class="card-body">'
+        + '<h3>' + esc(e.name) + '</h3>'
+        + (metaLine ? '<p class="meta">' + esc(metaLine) + '</p>' : '')
+        + (e.description ? '<p class="desc">' + esc(e.description) + '</p>' : '')
+        + '</div>'
+        + cardClose;
+    });
+
+    contentEl.className = '';
+    contentEl.innerHTML = html;
+  }
+
+  fetch('../events.json', { cache: 'no-store' })
+    .then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      var events = data.events || [];
+
+      if (start) events = events.filter(function (e) { return e.date && e.date >= start; });
+      if (end)   events = events.filter(function (e) { return e.date && e.date <= end; });
+
+      renderEvents(events);
+
+      if (data.generated_at) {
+        footerEl.style.display = 'block';
+        footerEl.textContent = 'Updated ' + new Date(data.generated_at).toLocaleString('en-US', {
+          month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+        });
+      }
+    })
+    .catch(function (err) {
+      contentEl.className = 'error-state';
+      contentEl.textContent = 'Couldn’t load events right now. Please try refreshing.';
+      console.error('The Rundown calendar feed error:', err);
+    });
+})();
+</script>
+</body>
+</html>
