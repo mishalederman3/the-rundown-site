@@ -1,7 +1,8 @@
 {
-  "generated_at": "2026-08-25T00:42:40Z",
+  "generated_at": "2026-08-25T01:02:08Z",
   "events": [
     {
+      "id": "recWd81bnaxgrrpzU",
       "name": "The Belfort Events",
       "date": "2026-09-12",
       "time": "10:00 PM – 2:00 AM",
@@ -12,6 +13,7 @@
       "link": "https://thebelfort.net/events"
     },
     {
+      "id": "recmyW2l1bNaGuisP",
       "name": "MURDA BEATZ @ LOST LOVE",
       "date": "2026-09-12",
       "time": "10:00 PM – 2:00 AM EDT",
@@ -22,16 +24,7 @@
       "link": "https://www.showpass.com/murda-beatz-london-ontario/"
     },
     {
-      "name": "EX x ZY Presents: WESTERN OPEN ROOFTOP DARTY",
-      "date": "2026-09-12",
-      "time": "1:00 PM – 5:00 PM EDT",
-      "venue": "Lost Love Social House",
-      "price": "$10.00 – $20.00",
-      "description": "Kick off frosh week at the rooftop darty! Dress all white and join EX x ZY for the season's first rooftop party. 19+ only.",
-      "image_url": "https://doavub8d2uzrx.cloudfront.net/media/images/events/lost-love/img-banner/1733f7b5-08d.png",
-      "link": "https://www.showpass.com/ex-x-zy-presents-western-open-rooftop-darty/"
-    },
-    {
+      "id": "recRfYR6qNhxu4jwj",
       "name": "BCKYRD LONDON",
       "date": "2026-09-18",
       "time": "3:00 PM EDT",
