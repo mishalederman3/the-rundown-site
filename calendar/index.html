@@ -16,22 +16,39 @@
   matters: beehiiv strips <style>/<script> from HTML pasted into its
   editor, but a page loaded via <iframe> is just an ordinary webpage.
 
+  This page is deliberately built to visually MIRROR the <noscript>-
+  wrapped static This Week/Next Week cards in templates/newsletter.html
+  exactly — same headings, same date-range subtitle text, same day-of-
+  week headers, same card styling/order (see build_event_card() /
+  build_this_week_block() / build_next_week_block() in
+  generate_newsletter.py, which this file's CSS/markup values are copied
+  from by hand; if those change, this needs updating to match). The only
+  intended difference is that this page is live: it re-fetches
+  events.json on every view instead of being frozen at send time.
+
   Data flow:
     scripts/generate_public_feed.py writes site/events.json, which this
     page fetches client-side on every page view, so it's always as
-    current as the last time that script ran (see the Makefile "feed"
-    target for how often that is).
+    current as the last time that script ran (see the Makefile "update"
+    target for how that gets deployed).
 
-  URL params (both optional; UTC, inclusive on both ends):
-    ?start=YYYY-MM-DD
-    ?end=YYYY-MM-DD
-  With no params, every event in events.json is shown.
+  URL params (all set by apply_live_calendar_block() in
+  generate_newsletter.py; this_week_label/next_week_label are the exact
+  same pre-formatted "This Week Date Range"/"Next Week Date Range"
+  strings the static email cards use — passed through as-is rather than
+  reformatted here, so the subtitle text can't drift out of sync):
+    ?this_week_start=YYYY-MM-DD   &this_week_end=YYYY-MM-DD
+    ?next_week_start=YYYY-MM-DD   &next_week_end=YYYY-MM-DD
+    &this_week_label=<url-encoded display string, e.g. "September 6-September 12">
+    &next_week_label=<url-encoded display string>
+  Without these params, both sections render empty (matching the
+  email's "No events in this section yet." fallback).
 -->
 <style>
   :root {
     --purple: #4f2683;
-    --purple-light: #d7c8ec;
     --ink: #18111f;
+    --heading-ink: #2d2438;
     --body-text: #3f354c;
     --meta-text: #5b5166;
     --card-bg: #fbf9ff;
@@ -50,11 +67,37 @@
   }
 
   body {
-    padding: 16px;
+    padding: 0 10px;
   }
 
+  /* Section heading + date-range subtitle — copied from the
+     .section-title / date-range <p> styles in templates/newsletter.html */
+  .section-title {
+    margin: 0 0 4px;
+    font-size: 22px;
+    line-height: 28px;
+    color: var(--heading-ink);
+    font-weight: 800;
+  }
+
+  .section-title:not(:first-child) {
+    margin-top: 32px;
+  }
+
+  .date-range {
+    margin: 0 0 18px;
+    font-size: 13px;
+    line-height: 19px;
+    color: var(--meta-text);
+    font-weight: bold;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--card-border);
+  }
+
+  /* Day-of-week header — copied from build_this_week_block() /
+     build_next_week_block() in generate_newsletter.py */
   .day-heading {
-    margin: 20px 0 8px;
+    margin: 10px 0 8px;
     padding: 0 0 8px 10px;
     border-left: 3px solid var(--purple);
     font-size: 13px;
@@ -64,70 +107,63 @@
     letter-spacing: 0.07em;
   }
 
-  .day-heading:first-of-type {
+  .day-heading.first-in-section {
     margin-top: 0;
   }
 
+  /* Event card — copied from build_event_card() in generate_newsletter.py.
+     Image full-width on top (never side-by-side), matching the static
+     email cards exactly rather than this page's own separate layout. */
   .event-card {
-    display: flex;
-    gap: 14px;
+    display: block;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 8px;
-    padding: 14px;
-    margin-bottom: 12px;
+    padding: 15px;
+    margin-bottom: 14px;
     text-decoration: none;
     color: inherit;
   }
 
   .event-card img {
     display: block;
-    width: 96px;
-    height: 96px;
-    min-width: 96px;
-    object-fit: cover;
+    width: 100%;
+    height: auto;
     border-radius: 6px;
-    background: var(--purple-light);
-  }
-
-  .event-card .card-body {
-    min-width: 0; /* allow text to wrap instead of overflowing the flex item */
+    border: 0;
+    margin-bottom: 10px;
   }
 
   .event-card h3 {
-    margin: 0 0 4px;
-    font-size: 16px;
-    line-height: 21px;
+    margin: 0 0 5px;
+    font-size: 17px;
+    line-height: 23px;
+    color: var(--ink);
   }
 
   .event-card .meta {
     margin: 0;
-    font-size: 12.5px;
-    line-height: 18px;
-    color: var(--meta-text);
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--body-text);
   }
 
   .event-card .desc {
     margin: 4px 0 0;
-    font-size: 12.5px;
-    line-height: 18px;
+    font-size: 13px;
+    line-height: 20px;
     color: var(--body-text);
   }
 
-  /* Real breakpoint — this page isn't pasted into beehiiv, so unlike the
-     newsletter template, a CSS media query here actually reaches the
-     browser. Stack the image above the text on narrow iframe widths. */
-  @media (max-width: 420px) {
-    .event-card {
-      flex-direction: column;
-    }
-    .event-card img {
-      width: 100%;
-      height: 160px;
-    }
+  /* "No events in this section yet." — copied from generate_newsletter.py's
+     empty_msg fallback */
+  .empty-section {
+    font-size: 14px;
+    color: var(--meta-text);
+    padding: 8px 0;
   }
 
-  .empty-state, .error-state, .loading-state {
+  .error-state, .loading-state {
     padding: 32px 12px;
     text-align: center;
     color: var(--meta-text);
@@ -140,7 +176,6 @@
     font-size: 11px;
     color: var(--meta-text);
   }
-
 </style>
 </head>
 <body>
@@ -150,8 +185,13 @@
 <script>
 (function () {
   var params = new URLSearchParams(window.location.search);
-  var start  = params.get('start'); // YYYY-MM-DD, inclusive
-  var end    = params.get('end');   // YYYY-MM-DD, inclusive
+
+  var thisWeekStart = params.get('this_week_start');
+  var thisWeekEnd   = params.get('this_week_end');
+  var nextWeekStart = params.get('next_week_start');
+  var nextWeekEnd   = params.get('next_week_end');
+  var thisWeekLabel = params.get('this_week_label') || '';
+  var nextWeekLabel = params.get('next_week_label') || '';
 
   var contentEl = document.getElementById('content');
   var footerEl  = document.getElementById('footer');
@@ -162,50 +202,91 @@
     return div.innerHTML;
   }
 
-  function formatDayHeading(dateStr) {
-    // dateStr is "YYYY-MM-DD"; parse as UTC to avoid local-timezone day shift
-    var parts = dateStr.split('-').map(Number);
-    var d = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
-    return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' }).toUpperCase();
+  function inRange(dateStr, start, end) {
+    if (!dateStr) return false;
+    if (start && dateStr < start) return false;
+    if (end && dateStr > end) return false;
+    return true;
   }
 
-  function renderEvents(events) {
+  // "TUESDAY" — matches build_this_week_block()'s dt.strftime("%A").upper()
+  function dayNameOnly(dateStr) {
+    var parts = dateStr.split('-').map(Number);
+    var d = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
+    return d.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' }).toUpperCase();
+  }
+
+  // "FRIDAY, SEPTEMBER 11" — matches build_next_week_block()'s
+  // (dt.strftime("%A, %B") + " " + str(dt.day)).upper()
+  function dayNameWithDate(dateStr) {
+    var parts = dateStr.split('-').map(Number);
+    var d = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
+    var weekday = d.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' });
+    var month   = d.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+    return (weekday + ', ' + month + ' ' + parts[2]).toUpperCase();
+  }
+
+  // Renders one section's events, grouped by day, day headers via
+  // dayHeadingFn — mirrors build_this_week_block()/build_next_week_block().
+  // Returns an HTML string; caller wraps it with the section heading.
+  function renderEventGroup(events, dayHeadingFn) {
     if (events.length === 0) {
-      contentEl.className = 'empty-state';
-      contentEl.textContent = 'No events in this range right now — check back soon!';
-      return;
+      return '<p class="empty-section">No events in this section yet.</p>';
     }
 
     var html = '';
     var prevDay = null;
+    var firstHeading = true;
 
     events.forEach(function (e) {
       if (e.date && e.date !== prevDay) {
-        html += '<div class="day-heading">' + esc(formatDayHeading(e.date)) + '</div>';
+        html += '<div class="day-heading' + (firstHeading ? ' first-in-section' : '') + '">'
+          + esc(dayHeadingFn(e.date)) + '</div>';
         prevDay = e.date;
+        firstHeading = false;
       }
 
-      var metaParts = [e.venue, e.time, e.price].filter(Boolean);
+      // venue | price only — no date (the day header covers it) and no
+      // time, matching build_event_card()'s meta line exactly.
+      var metaParts = [e.venue, e.price].filter(Boolean);
       var metaLine = metaParts.join(' | ');
 
       var imgHtml = e.image_url
         ? '<img src="' + esc(e.image_url) + '" alt="' + esc(e.name) + '" loading="lazy">'
         : '';
 
-      var cardOpen = e.link
-        ? '<a class="event-card" href="' + esc(e.link) + '" target="_blank" rel="noopener">'
-        : '<div class="event-card">';
-      var cardClose = e.link ? '</a>' : '</div>';
+      var tag = e.link ? 'a' : 'div';
+      var attrs = e.link ? ' href="' + esc(e.link) + '" target="_blank" rel="noopener"' : '';
 
-      html += cardOpen
+      html += '<' + tag + ' class="event-card"' + attrs + '>'
         + imgHtml
-        + '<div class="card-body">'
         + '<h3>' + esc(e.name) + '</h3>'
         + (metaLine ? '<p class="meta">' + esc(metaLine) + '</p>' : '')
         + (e.description ? '<p class="desc">' + esc(e.description) + '</p>' : '')
-        + '</div>'
-        + cardClose;
+        + '</' + tag + '>';
     });
+
+    return html;
+  }
+
+  function render(allEvents) {
+    var thisWeekEvents = allEvents
+      .filter(function (e) { return inRange(e.date, thisWeekStart, thisWeekEnd); })
+      .sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+
+    var nextWeekEvents = allEvents
+      .filter(function (e) { return inRange(e.date, nextWeekStart, nextWeekEnd); })
+      .sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+
+    var html = '';
+
+    html += '<h2 class="section-title">📅 This Week</h2>';
+    html += '<p class="date-range">' + esc(thisWeekLabel) + '</p>';
+    html += renderEventGroup(thisWeekEvents, dayNameOnly);
+
+    html += '<h2 class="section-title">📅 Next Week</h2>';
+    html += '<p class="date-range">' + esc(nextWeekLabel) + '</p>';
+    html += renderEventGroup(nextWeekEvents, dayNameWithDate);
 
     contentEl.className = '';
     contentEl.innerHTML = html;
@@ -217,12 +298,7 @@
       return res.json();
     })
     .then(function (data) {
-      var events = data.events || [];
-
-      if (start) events = events.filter(function (e) { return e.date && e.date >= start; });
-      if (end)   events = events.filter(function (e) { return e.date && e.date <= end; });
-
-      renderEvents(events);
+      render(data.events || []);
 
       if (data.generated_at) {
         footerEl.style.display = 'block';
