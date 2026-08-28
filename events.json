@@ -1,6 +1,28 @@
 {
-  "generated_at": "2026-08-26T01:59:54Z",
+  "generated_at": "2026-08-28T21:36:39Z",
   "events": [
+    {
+      "id": "recBmLpSad8mQlQ1n",
+      "name": "AEPI Presents: ENDLESS SUMMER ROOFTOP PARTY",
+      "date": "2026-09-08",
+      "time": "10:00 PM – 2:00 AM EDT",
+      "venue": "Lost Love Social House",
+      "price": "$10.00 – $20.00",
+      "description": "Kick off frosh week at AEPI's annual Endless Summer Rooftop Party. Tickets sell out fast—grab yours now! 19+ event.",
+      "image_url": "https://doavub8d2uzrx.cloudfront.net/media/images/events/lost-love/img-banner/e215adce-60a.png",
+      "link": "https://www.showpass.com/aepi-presents-endless-summer-rooftop-party/"
+    },
+    {
+      "id": "recFgBsHtuvCMmIWE",
+      "name": "GABE VASCONCELOS @ LOST LOVE",
+      "date": "2026-09-11",
+      "time": "10:00 PM – 2:00 AM EDT",
+      "venue": "Lost Love Social House",
+      "price": "$10.00 – $30.00",
+      "description": "Gabriel from Love Island USA Season 8 is bringing the party to Lost Love for Frosh Week Friday. Don't miss this must-see event!",
+      "image_url": "https://doavub8d2uzrx.cloudfront.net/media/images/events/lost-love/img-banner/76c1072c-771.png",
+      "link": "https://www.showpass.com/gabe-vasconcelos-lost-love/"
+    },
     {
       "id": "recWd81bnaxgrrpzU",
       "name": "The Belfort Events",
