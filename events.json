@@ -1,50 +1,6 @@
 {
-  "generated_at": "2026-09-12T04:28:37Z",
+  "generated_at": "2026-09-13T16:58:26Z",
   "events": [
-    {
-      "id": "rec4jOwlCWDPHav1Q",
-      "name": "DELILAH'S WELCOME BACK DAY PARTY",
-      "date": "2026-09-12",
-      "time": "1:00 PM – 6:00 PM",
-      "venue": "Delilah's",
-      "price": "CA$30.00",
-      "description": "Join Delilah's for the first day party of the year with cold drinks, great music, and good vibes on the iconic patio. 19+ only.",
-      "image_url": "https://firstin-app.s3.ca-central-1.amazonaws.com/storage/image/f1b5db32-2b4e-4fdb-9f20-d65a9d3ce5bf.PNG",
-      "link": "https://firstin.app/events/delilahs-welcome-back-day-party"
-    },
-    {
-      "id": "recOo4g6Vt6UJlWrS",
-      "name": "EX x ZY Presents: WESTERN OPEN ROOFTOP DARTY",
-      "date": "2026-09-12",
-      "time": "1:00 PM – 5:00 PM EDT",
-      "venue": "Lost Love Social House",
-      "price": "$10.00 – $20.00",
-      "description": "Join EX x ZY for the first rooftop darty of the school year! Dress in all white and get ready for an epic Frosh Week Saturday at Lost Love Social House. 19+ only.",
-      "image_url": "https://doavub8d2uzrx.cloudfront.net/media/images/events/lost-love/img-banner/1733f7b5-08d.png",
-      "link": "https://www.showpass.com/ex-x-zy-presents-western-open-rooftop-darty/"
-    },
-    {
-      "id": "recWd81bnaxgrrpzU",
-      "name": "The Belfort Events",
-      "date": "2026-09-12",
-      "time": "10:00 PM – 2:00 AM",
-      "venue": "The Belfort",
-      "price": "$10.00 – $12.50",
-      "description": "The Belfort hosts regular Saturday nights and themed events throughout the year. Valid student ID required; tiered ticket pricing available.",
-      "image_url": "https://thebelfort.net/images/hero_still.jpg",
-      "link": "https://thebelfort.net/events"
-    },
-    {
-      "id": "recmyW2l1bNaGuisP",
-      "name": "MURDA BEATZ @ LOST LOVE",
-      "date": "2026-09-12",
-      "time": "10:00 PM – 2:00 AM EDT",
-      "venue": "Lost Love Social House",
-      "price": "$10.00 – $30.00",
-      "description": "Murda Beatz brings his underground house sound to Lost Love for Frosh Week Saturday. Fresh off his #1 hit 'Baby,' expect nonstop beats and chart-topping tracks. 19+.",
-      "image_url": "https://doavub8d2uzrx.cloudfront.net/media/images/events/lost-love/img-banner/5fa0c08c-1f6.png",
-      "link": "https://www.showpass.com/murda-beatz-london-ontario/"
-    },
     {
       "id": "recRfYR6qNhxu4jwj",
       "name": "BCKYRD LONDON",
