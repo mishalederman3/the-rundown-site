@@ -1,4 +1,60 @@
 {
-  "generated_at": "2026-09-25T13:54:47Z",
-  "events": []
+  "generated_at": "2026-09-25T14:25:29Z",
+  "events": [
+    {
+      "id": "recWzMS3mEZqUMsdk",
+      "name": "EX x AEPI-DEVAULT @ LOST LOVE HOCO PRE",
+      "date": "2026-09-25",
+      "time": "10:00 PM – 3:00 AM",
+      "venue": "Lost Love Social",
+      "price": "$10.00 – $30.00",
+      "description": "EX & AEPI bring DEVAULT's dark electronic beats to Lost Love for HOCO weekend. A massive kickoff featuring a DJ known for collaborations with ZHU and major festival appearances.",
+      "image_url": "https://bounce.photos/events/6aa8564a0a0fe6714c54f50c/cover-1789417035378.jpg",
+      "link": "https://www.bouncelife.com/events/6aa8564a0a0fe6714c54f50c"
+    },
+    {
+      "id": "recJhYraUkDWfB3nD",
+      "name": "HOCO ROOFTOP DARTY",
+      "date": "2026-09-26",
+      "time": "1:00 PM – 5:00 PM",
+      "venue": "Lost Love Social",
+      "price": "$5–$20",
+      "description": "Join Western's legendary HOCO Darty on the rooftop! Dress in your hottest homecoming gear and celebrate school spirit with fellow purple ponies. 19+ event.",
+      "image_url": "https://bounce.photos/events/6aa8657106f8651a1c152a99/cover-1789420958631.jpg",
+      "link": "https://www.bouncelife.com/events/6aa8657106f8651a1c152a99"
+    },
+    {
+      "id": "recReTC4Dl849GBds",
+      "name": "DELILAH'S HOCO DARTY",
+      "date": "2026-09-26",
+      "time": "1:00 PM – 6:00 PM",
+      "venue": "Delilah's",
+      "price": "From CA$30.00",
+      "description": "Western's biggest homecoming darty returns to Delilah's! Join the packed patio for drinks, DJs, and all-day energy. Wear purple, bring your crew, and celebrate in style.",
+      "image_url": "https://firstin-app.s3.ca-central-1.amazonaws.com/storage/image/ba9ca29b-0cae-4d05-a70d-5051df96a627.PNG",
+      "link": "https://firstin.app/events/delilahs-hoco-darty-2"
+    },
+    {
+      "id": "recRsKEbxKNJt3BDg",
+      "name": "Daisy's Express Pass",
+      "date": "2026-09-26",
+      "time": "6:00 PM EDT",
+      "venue": "Daisy's Saloon",
+      "price": "$24.95",
+      "description": "An express pass for Daisy's Saloon offering flexible date selection. Valid from September 2026 through December 2028.",
+      "image_url": "https://images.squarespace-cdn.com/content/v1/667ae1d2f8c8024c425e9e91/1b00b236-2c34-4b86-a0da-92ca105365ee/Daisy-White%2BRed.png",
+      "link": "https://www.showpass.com/expresspasslondon/"
+    },
+    {
+      "id": "rec1QMwm0xU42vkr8",
+      "name": "VIP Pass - Homecoming 2026 @ Jack's",
+      "date": "2026-09-26",
+      "time": "6:00 PM – 2:00 AM",
+      "venue": "Jack's",
+      "price": "CA$10.00",
+      "description": "Grab a VIP Pass for Homecoming 2026 at Jack's with line bypass, entrance privileges, and exclusive purple vodka lemonades. Arrive whenever you want!",
+      "image_url": "https://firstin-app.s3.ca-central-1.amazonaws.com/storage/image/70ebd764-dc35-4c7a-9f58-1950dd344664.png",
+      "link": "https://firstin.app/events/vip-pass-homecoming-2026-jacks?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAcGRvZgJzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAadokEK05j3dMVv99DN1uKEjhFs-CxflQu0SlmmNYDCUOgLbW3Pp1X2op2loZg_aem_NI1lqy-BJeGTwE_3tZmVUg"
+    }
+  ]
 }
