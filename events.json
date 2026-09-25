@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-25T14:57:30Z",
+  "generated_at": "2026-09-25T14:58:29Z",
   "events": [
     {
       "id": "recWzMS3mEZqUMsdk",
@@ -55,6 +55,17 @@
       "description": "Grab a VIP Pass for Homecoming 2026 at Jack's with line bypass, entrance privileges, and exclusive purple vodka lemonades. Arrive whenever you want!",
       "image_url": "https://firstin-app.s3.ca-central-1.amazonaws.com/storage/image/70ebd764-dc35-4c7a-9f58-1950dd344664.png",
       "link": "https://firstin.app/events/vip-pass-homecoming-2026-jacks?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAcGRvZgJzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAadokEK05j3dMVv99DN1uKEjhFs-CxflQu0SlmmNYDCUOgLbW3Pp1X2op2loZg_aem_NI1lqy-BJeGTwE_3tZmVUg"
+    },
+    {
+      "id": "recjv9aHuGk7cRLtr",
+      "name": "",
+      "date": "2026-09-26",
+      "time": "10:00 PM – 2:00 AM",
+      "venue": "The Belfort",
+      "price": "Tickets Dropping Soon",
+      "description": "The Belfort is a 19+ nightclub in London hosting regular Saturday events with rotating themed nights including country, Halloween, and holiday specials.",
+      "image_url": "https://thebelfort.net/images/hero_still.jpg",
+      "link": "https://thebelfort.net/events"
     }
   ]
 }
